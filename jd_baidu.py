@@ -52,16 +52,25 @@ def jdlist_parser(list):
 
 '''获取jd列表'''
 def get_jd_list(postType,workPlace,keyWord,recruitType=2,size=None):
+    location = {
+        '北京': '0/4/7/9',
+        '上海': '0/4/10/11'
+    }
+    type = {
+        '技术': '0/1227/10002',
+        '产品': '0/1227/37850530'
+    }
+
     id_list = []
     curtime = int(round(time.time() * 1000))
-    list = get_jd_list_by_page(postType,workPlace,keyWord,20,1,curtime,recruitType=2)
+    list = get_jd_list_by_page(type[postType],location[workPlace],keyWord,20,1,curtime,recruitType)
 
     if list['postList']:
         totalPage = list['totalPage']
         if not size is None:
             totalPage = size/20+1
         for i in range(totalPage):
-            tmplist = get_jd_list_by_page(postType,workPlace,keyWord,20,i,curtime,recruitType=2)
+            tmplist = get_jd_list_by_page(type[postType],location[workPlace],keyWord,20,i,curtime,recruitType)
             id_list.extend(jdlist_parser(tmplist))
 
     return id_list
@@ -127,9 +136,9 @@ if __name__ == '__main__':
         '产品':'0/1227/37850530'
     }
 
-    # list = get_jd_list(type['技术'],location['北京'],'测试',2,10)
-    content = get_jd_detail(145506)
-    print  json.dumps(content, encoding="UTF-8", ensure_ascii=False, sort_keys=False, indent=4)
+    list = get_jd_list('技术','北京','测试',2,10)
+    # content = get_jd_detail(145506)
+    # print  json.dumps(content, encoding="UTF-8", ensure_ascii=False, sort_keys=False, indent=4)
     print 'list'
 
 
