@@ -65,7 +65,7 @@ def get_jd_list(first,second,location,keyWord,size=None):
     return id_list
 
 '''获取每个jd详情'''
-def get_jd_list(id):
+def get_jd_detail(id):
     content = {}
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko'}
     url = 'https://job.alibaba.com/zhaopin/position_detail.htm?positionId='+str(id)
@@ -73,10 +73,11 @@ def get_jd_list(id):
     data = None
     html = jd_urllib.send_json_request(url, data, 'GET', headers, cookie)
     soup = BeautifulSoup(html, 'html.parser')
-
+    title = soup.find_all("h3",class_="bg-title")
     td = soup.find_all("td")
     detail_content= soup.find_all("p", class_="detail-content")
 
+    content['标题'] = title[0].text.replace('\r','').replace('\n','').replace('\t','')
     content['发布时间'] = td[1].text.replace('\r','').replace('\n','').replace('\t','')
     content['工作地点'] = td[3].text.replace('\r','').replace('\n','').replace('\t','')
     content['工作年限'] = td[5].text.replace('\r','').replace('\n','').replace('\t','')
@@ -89,9 +90,9 @@ def get_jd_list(id):
 
 
 '''获取jd详情存储至csv'''
-def get_jd_list(ids):
+def get_jd_detail_list(ids):
     for id in ids:
-        content = get_jd_list(id)
+        content = get_jd_detail(id)
 
     return content
 
@@ -100,7 +101,7 @@ def get_jd_list(ids):
 if __name__ == '__main__':
 
     # list = get_jd_list('技术类','质量保证','','',10)
-    content = get_jd_list(64696)
+    content = get_jd_detail(64696)
     print  json.dumps(content, encoding="UTF-8", ensure_ascii=False, sort_keys=False, indent=4)
     print 'list'
 
