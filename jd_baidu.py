@@ -5,6 +5,7 @@ import jd_urllib
 import logging
 import urllib
 from bs4 import BeautifulSoup
+import csvrw
 
 
 
@@ -127,18 +128,20 @@ def get_jd_detail_list(ids):
 
 if __name__ == '__main__':
 
-    location = {
-        '北京':'0/4/7/9',
-        '上海':'0/4/10/11'
-    }
-    type = {
-        '技术':'0/1227/10002',
-        '产品':'0/1227/37850530'
-    }
-
+    listcontent = []
     list = get_jd_list('技术','北京','测试',2,10)
-    # content = get_jd_detail(145506)
-    # print  json.dumps(content, encoding="UTF-8", ensure_ascii=False, sort_keys=False, indent=4)
-    print 'list'
+    # list =[64696]
+    for id in list:
+        try:
+            content = get_jd_detail(id)
+            listcontent.append(content)
+        except:
+            print("baidu get_jd_detail exception occors for id......".join(id))
+
+    headers = ['标题', '发布时间', '工作地点', '工作年限', '所属部门', '学历', '招聘人数', '岗位描述', '岗位要求']
+    csvrw.csv_write_dict('/Users/ting/PycharmProjects/testa.csv', listcontent, headers)
+
+    print 'success'
+
 
 

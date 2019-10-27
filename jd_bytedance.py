@@ -5,6 +5,7 @@ import jd_urllib
 import logging
 import urllib
 from bs4 import BeautifulSoup
+import csvrw
 
 
 
@@ -56,6 +57,7 @@ def get_jd_detail_list(city,summary_id,keyword,type=1,size=None):
         '产品': '874'
     }
 
+    listcontent = []
     list = get_jd_list_by_page(location[city],summary[summary_id],keyword,20,0,type)
 
     if list['count']:
@@ -64,41 +66,46 @@ def get_jd_detail_list(city,summary_id,keyword,type=1,size=None):
             count = size
         for i in range(1, count, 20):
             tmplist = get_jd_list_by_page(location[city],summary[summary_id],keyword,20,i,type)
-            jdlist_parser(tmplist)
+            tmpcontent = jdlist_parser(tmplist)
+            listcontent.extend(tmpcontent)
+
+    return listcontent
 
 
 '''由于detail页面需要signature，暂时只从列表获取每个jd详情'''
 def jdlist_parser(list):
+    listcontent = []
     content = {}
     # linkList
     if list['positions']:
         for data in list['positions']:
-            positions = data['positions']
-            content['标题'] = positions['name']
-            content['发布时间'] = positions['create_time']
-            content['工作地点'] = positions['city']
-            content['工作年限'] = positions['work_year']
-            content['所属部门'] = positions['category']
-            content['学历'] = ''
-            content['招聘人数'] = ''
-            content['岗位描述'] = positions['description']
-            content['岗位要求'] = positions['requirement']
+            try:
+                positions = data['positions']
+                content['标题'] = positions['name']
+                content['发布时间'] = positions['create_time']
+                content['工作地点'] = positions['city']
+                content['工作年限'] = positions['work_year']
+                content['所属部门'] = positions['category']
+                content['学历'] = ''
+                content['招聘人数'] = ''
+                content['岗位描述'] = positions['description']
+                content['岗位要求'] = positions['requirement']
+                listcontent.extend(content)
+            except:
+                print("bytedance jdlist_parser exception occors for id......".join(data))
+
+    return listcontent
+
 
 
 if __name__ == '__main__':
 
-    location = {
-        '北京':'0/4/7/9',
-        '上海':'0/4/10/11'
-    }
-    type = {
-        '技术':'0/1227/10002',
-        '产品':'0/1227/37850530'
-    }
 
-    list = get_jd_detail_list('全部','全部','测试',1,10)
-    # content = get_jd_detail(145506)
-    # print  json.dumps(content, encoding="UTF-8", ensure_ascii=False, sort_keys=False, indent=4)
-    print 'list'
+
+    listcontent = get_jd_detail_list('全部','全部','测试',1,10)
+    headers = ['标题', '发布时间', '工作地点', '工作年限', '所属部门', '学历', '招聘人数', '岗位描述', '岗位要求']
+    csvrw.csv_write_dict('/Users/ting/PycharmProjects/testa.csv', listcontent, headers)
+
+    print 'success'
 
 

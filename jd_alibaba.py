@@ -107,13 +107,16 @@ if __name__ == '__main__':
     list = get_jd_list('技术类','质量保证','','')
     # list =[64696]
     for id in list:
-        content = get_jd_detail(id)
-        listcontent.append(content)
+        try:
+            content = get_jd_detail(id)
+            listcontent.append(content)
+        except:
+            print("alibaba get_jd_detail exception occors for id......".join(id))
 
     headers = ['标题','发布时间','工作地点','工作年限','所属部门','学历','招聘人数','岗位描述','岗位要求']
     csvrw.csv_write_dict('/Users/ting/PycharmProjects/testa.csv',listcontent,headers)
-    print  json.dumps(content, encoding="UTF-8", ensure_ascii=False, sort_keys=False, indent=4)
-    print 'list'
+
+    print 'success'
 
 
 
