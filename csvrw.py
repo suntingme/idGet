@@ -15,7 +15,7 @@ def csv_write(path, data):
     return True
 
 
-def csv_write_dict(path,data,headers=['title','publishtime','place','workyear','org','education','number','description','requirement']):
+def csv_write_dict(path,data,headers=['标题','发布时间','工作地点','工作年限','所属部门','学历','招聘人数','岗位描述','岗位要求']):
     # if not os.path.exists(path):
     #     f = open(path,'w')
     #     f.close()

@@ -78,15 +78,16 @@ def get_jd_detail(id):
     td = soup.find_all("td")
     detail_content= soup.find_all("p", class_="detail-content")
 
-    content['title'] = title[0].text.replace('\r','').replace('\n','').replace('\t','')
-    content['publishtime'] = td[1].text.replace('\r','').replace('\n','').replace('\t','')
-    content['place'] = td[3].text.replace('\r','').replace('\n','').replace('\t','')
-    content['workyear'] = td[5].text.replace('\r','').replace('\n','').replace('\t','')
-    content['org'] = td[7].text.replace('\r','').replace('\n','').replace('\t','')
-    content['education'] = td[9].text.replace('\r','').replace('\n','').replace('\t','')
-    content['number'] = td[11].text.replace('\r','').replace('\n','').replace('\t','')
-    content['description']=detail_content[0].text.replace('\r','').replace('\n','').replace('\t','')
-    content['requirement']=detail_content[1].text.replace('\r','').replace('\n','').replace('\t','')
+    content['标题'] = title[0].text.replace('\r', '').replace('\n', '').replace('\t', '').replace(' ', '')
+    content['发布时间'] = td[1].text.replace('\r','').replace('\n','').replace('\t','').replace(' ', '')
+    content['工作地点'] = td[3].text.replace('\r','').replace('\n','').replace('\t','').replace(' ', '')
+    content['工作年限'] = td[5].text.replace('\r','').replace('\n','').replace('\t','').replace(' ', '')
+    content['所属部门'] = td[7].text.replace('\r','').replace('\n','').replace('\t','').replace(' ', '')
+    content['学历'] = td[9].text.replace('\r','').replace('\n','').replace('\t','').replace(' ', '')
+    content['招聘人数'] = td[11].text.replace('\r','').replace('\n','').replace('\t','').replace(' ', '')
+    content['岗位描述']=detail_content[0].text.replace('\r','').replace('\n','').replace('\t','').replace(' ', '')
+    content['岗位要求']=detail_content[1].text.replace('\r','').replace('\n','').replace('\t','').replace(' ', '')
+
     return content
 
 
@@ -104,12 +105,15 @@ if __name__ == '__main__':
 
     listcontent = []
     list = get_jd_list('技术类','质量保证','','')
+    # list =[64696]
     for id in list:
         content = get_jd_detail(id)
         listcontent.append(content)
 
-    csvrw.csv_write_dict('/Users/ting/PycharmProjects/testa.csv',listcontent)
+    headers = ['标题','发布时间','工作地点','工作年限','所属部门','学历','招聘人数','岗位描述','岗位要求']
+    csvrw.csv_write_dict('/Users/ting/PycharmProjects/testa.csv',listcontent,headers)
     print  json.dumps(content, encoding="UTF-8", ensure_ascii=False, sort_keys=False, indent=4)
     print 'list'
+
 
 
