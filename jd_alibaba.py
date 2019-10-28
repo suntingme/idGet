@@ -105,7 +105,7 @@ if __name__ == '__main__':
 
     listcontent = []
     list = get_jd_list('技术类','质量保证','','')
-    # list =[64696]
+    # list =[64696,64696]
     for id in list:
         try:
             content = get_jd_detail(id)
@@ -114,7 +114,7 @@ if __name__ == '__main__':
             print("alibaba get_jd_detail exception occors for id......".join(id))
 
     headers = ['标题','发布时间','工作地点','工作年限','所属部门','学历','招聘人数','岗位描述','岗位要求']
-    csvrw.csv_write_dict('/Users/ting/PycharmProjects/testa.csv',listcontent,headers)
+    csvrw.csv_write_dict('C:\Users\hzsuntingting\工作总结\JD\\alibaba.csv',listcontent,headers)
 
     print 'success'
 

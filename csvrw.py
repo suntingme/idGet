@@ -2,6 +2,7 @@
 
 
 import csv
+import codecs
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -20,10 +21,11 @@ def csv_write_dict(path,data,headers=['标题','发布时间','工作地点','�
     #     f = open(path,'w')
     #     f.close()
     # 标题存在则追加，不存在则写入标题
-    with open(path, "a")as f:
+    with open(path.decode('utf-8'), "ab")as f:
+        f.write(codecs.BOM_UTF8)
         f_csv = csv.DictWriter(f, headers)
         # 以读的方式打开csv 用csv.reader方式判断是否存在标题。
-        with open(path, "r") as fr:
+        with open(path.decode('utf-8'), "r") as fr:
             reader = csv.reader(fr)
             if not [row for row in reader]:
                 f_csv.writeheader()
