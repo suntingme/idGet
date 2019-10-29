@@ -75,11 +75,12 @@ def get_jd_detail_list(city,summary_id,keyword,type=1,size=None):
 '''由于detail页面需要signature，暂时只从列表获取每个jd详情'''
 def jdlist_parser(list):
     listcontent = []
-    content = {}
+
     # linkList
     if list['positions']:
         for data in list['positions']:
             try:
+                content = {}
                 content['标题'] = data['name']
                 content['发布时间'] = data['create_time']
                 content['工作地点'] = data['city']

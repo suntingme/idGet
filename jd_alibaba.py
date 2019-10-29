@@ -60,7 +60,7 @@ def get_jd_list(first,second,location,keyWord,size=None):
         if not size is None:
             totalRecord = size
         for i in range(1,totalRecord , 20):
-            tmplist = get_jd_list_by_page(first, second, location, keyWord, '20', '1', '0.7500174887296684')
+            tmplist = get_jd_list_by_page(first, second, location, keyWord, '20', i, '0.7500174887296684')
             id_list.extend(jdlist_parser(tmplist))
 
     return id_list
