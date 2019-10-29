@@ -80,17 +80,16 @@ def jdlist_parser(list):
     if list['positions']:
         for data in list['positions']:
             try:
-                positions = data['positions']
-                content['标题'] = positions['name']
-                content['发布时间'] = positions['create_time']
-                content['工作地点'] = positions['city']
-                content['工作年限'] = positions['work_year']
-                content['所属部门'] = positions['category']
+                content['标题'] = data['name']
+                content['发布时间'] = data['create_time']
+                content['工作地点'] = data['city']
+                content['工作年限'] = data['work_year']
+                content['所属部门'] = data['category']
                 content['学历'] = ''
                 content['招聘人数'] = ''
-                content['岗位描述'] = positions['description']
-                content['岗位要求'] = positions['requirement']
-                listcontent.extend(content)
+                content['岗位描述'] = data['description']
+                content['岗位要求'] = data['requirement']
+                listcontent.append(content)
             except:
                 print("bytedance jdlist_parser exception occors for id......".join(data))
 
@@ -102,9 +101,9 @@ if __name__ == '__main__':
 
 
 
-    listcontent = get_jd_detail_list('全部','全部','测试',1,10)
+    listcontent = get_jd_detail_list('全部','全部','测试',1)
     headers = ['标题', '发布时间', '工作地点', '工作年限', '所属部门', '学历', '招聘人数', '岗位描述', '岗位要求']
-    csvrw.csv_write_dict('/Users/ting/PycharmProjects/testa.csv', listcontent, headers)
+    csvrw.csv_write_dict('xxx\\bytedance.csv',listcontent,headers)
 
     print 'success'
 

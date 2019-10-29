@@ -129,7 +129,7 @@ def get_jd_detail_list(ids):
 if __name__ == '__main__':
 
     listcontent = []
-    list = get_jd_list('技术','北京','测试',2,10)
+    list = get_jd_list('技术','北京','测试',2)
     # list =[64696]
     for id in list:
         try:
@@ -139,7 +139,7 @@ if __name__ == '__main__':
             print("baidu get_jd_detail exception occors for id......".join(id))
 
     headers = ['标题', '发布时间', '工作地点', '工作年限', '所属部门', '学历', '招聘人数', '岗位描述', '岗位要求']
-    csvrw.csv_write_dict('/Users/ting/PycharmProjects/testa.csv', listcontent, headers)
+    csvrw.csv_write_dict('xxx\\baidu.csv',listcontent,headers)
 
     print 'success'
 
