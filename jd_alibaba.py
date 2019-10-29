@@ -52,15 +52,16 @@ def jdlist_parser(list):
 '''获取jd列表'''
 def get_jd_list(first,second,location,keyWord,size=None):
     id_list = []
-    list = get_jd_list_by_page(first, second, location, keyWord, '20', '1', '0.7500174887296684')
+    list = get_jd_list_by_page(first, second, location, keyWord, '10', '1', '0.9388828046472246')
 
     if list['returnValue']:
         returnValue = list['returnValue']
         totalRecord = int(returnValue['totalRecord'])
         if not size is None:
-            totalRecord = size
-        for i in range(1,totalRecord , 20):
-            tmplist = get_jd_list_by_page(first, second, location, keyWord, '20', i, '0.7500174887296684')
+            totalRecord = size/10+2
+        for i in range(1,(totalRecord/10+2)):
+            print i
+            tmplist = get_jd_list_by_page(first, second, location, keyWord, '10', i, '0.9388828046472246')
             id_list.extend(jdlist_parser(tmplist))
 
     return id_list

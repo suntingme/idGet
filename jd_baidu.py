@@ -70,7 +70,7 @@ def get_jd_list(postType,workPlace,keyWord,recruitType=2,size=None):
         totalPage = list['totalPage']
         if not size is None:
             totalPage = size/20+1
-        for i in range(totalPage):
+        for i in range(totalPage+1):
             tmplist = get_jd_list_by_page(type[postType],location[workPlace],keyWord,20,i,curtime,recruitType)
             id_list.extend(jdlist_parser(tmplist))
 
